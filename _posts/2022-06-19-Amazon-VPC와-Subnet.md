@@ -1,5 +1,5 @@
 ---
-title: Amazon VPC와 Subnet
+title: Amazon VPC와 Subnet (작성중)
 author: Huey-J
 date: 2022-06-19 12:00:00 +0800
 categories: [데브옵스, AWS]
