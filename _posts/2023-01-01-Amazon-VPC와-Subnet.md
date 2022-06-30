@@ -1,7 +1,7 @@
 ---
 title: Amazon VPC와 Subnet (작성중)
 author: Huey-J
-date: 2022-06-19 12:00:00 +0800
+date: 2023-01-01 12:00:00 +0800
 categories: [데브옵스, AWS]
 tags: [AWS, DevOps]
 ---
@@ -9,7 +9,7 @@ tags: [AWS, DevOps]
 
 # 들어가기 전에
 
-- CIDR 블록: 
+- CIDR 블록:
 - NAT 게이트웨이: private 서브넷의 인스턴스가 인터넷이나 다른 VPC 등에 연결되도록 허용하는 퍼블릭 서브넷의 EC2 인스턴스를 말한다.
 
 
