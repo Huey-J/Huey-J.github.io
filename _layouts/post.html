@@ -148,49 +148,5 @@ tail_includes:
     {% include post-sharing.html %}
 
   </div><!-- .post-tail-bottom -->
-  
-  <!-- utterances -->
-  <!-- thanks to https://github.com/utterance/utterances/issues/549#issuecomment-917091550 -->
-  <section>
-    <div id="light-mode">
-      <script src="https://utteranc.es/client.js"
-        repo="Huey-J/Huey-J.github.io"
-        issue-term="url"
-        label="💬"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-      </script>
-    </div>
-
-    <div id="dark-mode">
-      <script src="https://utteranc.es/client.js"
-        repo="Huey-J/Huey-J.github.io"
-        issue-term="url"
-        label="💬"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-      </script>
-    </div>
-
-    <script>
-      var uttLight = document.getElementById("light-mode");
-      var uttDark = document.getElementById("dark-mode");
-
-      let initTheme = "light";
-      if ($("html[data-mode=dark]").length > 0
-        || ($("html[data-mode]").length == 0
-          && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-        initTheme = "dark";
-      }
-
-      if (initTheme === "dark") {
-        uttLight.parentNode.removeChild(uttLight);
-      } else {
-        uttDark.parentNode.removeChild(uttDark);
-      }
-    </script>
-  </section>
 
 </div><!-- div.post-tail-wrapper -->
