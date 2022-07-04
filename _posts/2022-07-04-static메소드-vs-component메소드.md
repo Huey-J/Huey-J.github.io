@@ -1,7 +1,7 @@
 ---
-title: static 메소드 vs @component 메소드
+title: static 메소드 vs @component 메소드 (feat.싱글톤 패턴)
 author: Huey-J
-date: 2022-06-23 12:00:00 +0800
+date: 2022-07-04 12:00:00 +0800
 categories: [backend, spring]
 tags: [spring, java]
 ---
@@ -13,20 +13,21 @@ tags: [spring, java]
 
 - @Component 어노테이션을 통해 생성한 객체는 빈으로 등록되어 IoC 컨테이너에서 관리됩니다.
 - 싱글톤 패턴이란 애플리케이션이 시작될 당시 최초 한번만 메모리를 할당하고 그 메모리에 인스턴스를 만들어 사용하는 디자인 패턴을 말한다. [자세히](https://tecoble.techcourse.co.kr/post/2020-11-07-singleton)
-- 아래 본문에서는 @Component 어노테이션을 통해 생성한 객체를 싱글톤 클래스라고 칭합니다.
+
 
 # Static? Singleton?
 
-싱글톤이란 애플리케이션이 실행되는 동안 단일 인스턴스를 보장하는 설계 패턴입니다.
-그리고 해당 인스턴스에 대해 어디서든 접근할 수 있도록 제공합니다.
+> 싱글톤패턴(Singleton Pattern)이란 인스턴스가 오직 하나만 생성되는 것을 보장하고 어디에서든 이 인스턴스에 접근할 수 있도록 하는 디자인 패턴 이다.
+> *(출처: [해시넷 위키](http://wiki.hash.kr/index.php/싱글톤패턴))*
+{: .prompt-info }
 
 @Component 어노테이션을 통해 생성한 객체는 빈으로 등록되어 IoC 컨테이너에서 관리됩니다.
-즉 싱글톤 패턴을 통해 관리하게 되는 것이죠.
+그리고 스프링 컨테이너는 등록된 스프링 빈들을 모두 싱글톤으로 관리합니다.
+즉 @Component 어노테이션을 붙힌 클래스는 스프링의 싱글톤 패턴을 통해 관리된다는 의미가 됩니다.
 따라서 어디서든 접근 가능한 IoC 컨테이너에 저장이 되며 애플리케이션이 시작될 당시 최초로 한번만 메모리에 할당됩니다.
 
 static 은 인스턴스 변수를 클래스 변수로 만들어주며 이는 곧 클래스와 연관관계를 맺게 됩니다.
 이를 통해 '클래스명.메소드명' 을 통해 해당 메소드에 접근할 수 있게 됩니다. 마치 '클래스명.변수명' 처럼 말이죠.
-
 따라서 정적 클래스에는 정적 메소드와 정적 변수가 포함됩니다.
 
 
@@ -195,37 +196,15 @@ Use static classes when we:
 In this article, we reviewed some of the essential differences between static classes and the Singleton pattern in Java. We also inferred when to use either of the two approaches in developing software.
 
 
----
 
-https://www.baeldung.com/java-static-class-vs-singleton\
-https://enterkey.tistory.com/300\
-https://www.geeksforgeeks.org/difference-between-singleton-pattern-and-static-class-in-java\
-https://okky.kr/article/291799\
-http://kwon37xi.egloos.com/4844149
+# References
 
----
+[https://www.baeldung.com/java-static-class-vs-singleton](https://www.baeldung.com/java-static-class-vs-singleton)\
+[https://enterkey.tistory.com/300](https://enterkey.tistory.com/300)\
+[https://www.geeksforgeeks.org/difference-between-singleton-pattern-and-static-class-in-java](https://www.geeksforgeeks.org/difference-between-singleton-pattern-and-static-class-in-java)\
+[https://okky.kr/article/291799](https://okky.kr/article/291799)\
+[http://kwon37xi.egloos.com/4844149](http://kwon37xi.egloos.com/4844149)
 
-이 간단한 튜토리얼에서는 Singleton 디자인 패턴에 프로그래밍하는 것과 Java에서 정적 클래스를 사용하는 것의 몇 가지 현저한 차이점에 대해 논의합니다.
-우리는 두 코딩 방법론을 검토하고 프로그래밍의 다른 측면과 관련하여 그것들을 비교할 것입니다.
-
-Singleton은 응용프로그램 수명 동안 클래스의 단일 인스턴스를 보장하는 설계 패턴입니다.
-또한 해당 인스턴스에 대한 글로벌 액세스 지점을 제공합니다.
-
-static – reserved 키워드는 인스턴스 변수를 클래스 변수로 만드는 수식어입니다.
-따라서 이러한 변수는 클래스와 연관됩니다(모든 개체와).
-메소드와 함께 사용하면 클래스 이름만으로 메소드에 액세스할 수 있습니다.
-마지막으로 정적 중첩된 내부 클래스도 만들 수 있습니다.
-이 컨텍스트에서 정적 클래스에는 정적 메서드와 정적 변수가 포함됩니다.
-
-
-3. 싱글톤 대 정적 유틸리티 클래스
-
-두 클래스의 몇 가지 중요한 차이점을 알아보자. (객체 지향적으로)
-
-
-
----
-자바 공식문서로 변경 (위)
 ---
 
 
@@ -252,14 +231,6 @@ static – reserved 키워드는 인스턴스 변수를 클래스 변수로 만�
 
 싱글톤 클래스는 상속받은 인터페이스를 구현하거나 다른 클래스에게 상속해줄 수 있습니다.
 하지만 정적 클래스는 인스턴스 구성원을 상속할 수 없습니다.
-
-
-
-
-# memo
-
-singleton = @component?
-
 
 
 # 원문
