@@ -1,7 +1,7 @@
 ---
 title: AWS Athena 설정하기
 author: Huey-J
-date: 2022-08-22 12:00:00 +0800
+date: 2022-09-02 12:00:00 +0800
 categories: [데브옵스, AWS]
 tags: [AWS, DevOps, Elastic Stack]
 ---
