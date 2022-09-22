@@ -35,7 +35,7 @@ github:
   username: Huey-J             # change to your github username
 
 twitter:
-  username: twitter_username            # change to your twitter username
+  username:             # change to your twitter username
 
 social:
   # Change to your full name.
@@ -48,7 +48,7 @@ social:
     - https://github.com/Huey-J       # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    - https://www.linkedin.com/in/hyeonhee-jang-a17b8521a
 
 google_site_verification: google252f47095b13bac6.html     # fill in to your verification string
 
