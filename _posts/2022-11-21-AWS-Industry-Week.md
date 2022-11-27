@@ -5,7 +5,7 @@ date: 2022-11-27 12:00:00 +0800
 categories: [후기, 컨퍼런스]
 tags: [AWS, 컨퍼런스]
 image:
-  path: /assets/img/aws_industry_week_conferenceroom.jpg
+  path: /assets/img/aws_industry_week_conferenceroom.png
 ---
 
 
@@ -21,7 +21,7 @@ image:
 
 # 체험 부스
 
-![aws industry week booth](/assets/img/aws_industry_week_booth.jpg)
+![aws industry week booth](/assets/img/aws_industry_week_booth.png)
 
 입장은 12시부터 가능하고 컨퍼런스는 2시부터 시작되는 일정이었는데요. 우선 저희는 12시쯤 도착해서 사람이 몰리기 전에 부스를 먼저 돌고 식사를 하기로 했습니다.
 
@@ -129,7 +129,7 @@ AWS에서 인기 있는 서비스를 소개하는 세션이었습니다.
 
 > AWS를 온프라미스를 대체하는 인프라가 아닌, 다양한 서비스를 활용하시어 핀테크 규제 대응 및 신뢰성 있는 아키텍처 구현을 위한 전략적 플랫폼으로 활용하시기 바랍니다.
 
-![aws industry week gifts](/assets/img/aws_industry_week_gifts.jpg)
+![aws industry week gifts](/assets/img/aws_industry_week_gifts.png)
 
 # References
 
