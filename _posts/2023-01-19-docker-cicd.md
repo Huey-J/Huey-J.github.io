@@ -1,9 +1,9 @@
 ---
 title: 스프링 서버의 세상 간단한 CI/CD 구축 방법 (with Docker, Github Actions, AWS EC2)
 author: Huey-J
-date: 2023-01-01 12:00:00 +0800
+date: 2023-01-19 12:00:00 +0800
 categories: [데브옵스, 네트워크]
-tags: [DevOps, Network]
+tags: [DevOps, Spring, AWS]
 ---
 
 CI/CD는 처음하는 분들에게는 꽤 난이도가 높은 작업이라고 생각합니다.
