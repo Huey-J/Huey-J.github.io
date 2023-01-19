@@ -35,7 +35,7 @@ CI/CD는 처음하는 분들에게는 꽤 난이도가 높은 작업이라고 �
 
 우선 가장 간단하게 깃허브 main 브랜치에 푸시가 되었을 때 빌드를 수행하는 워크플로우를 추가해 봅시다.
 
-프로젝트 루트 폴더에서 .github/workflows/basic-ci.yml 파일을 추가하고 아래 내용을 입력해 줍니다.
+프로젝트 루트 폴더에서 `.github/workflows/basic-ci.yml` 파일을 추가하고 아래 내용을 입력해 줍니다.
 
 ```yaml
 name: Basic CI
@@ -190,7 +190,7 @@ _aws ip address_
 기존에 작성되어 있는 부분 아래에 추가해 줍니다.
 
 ```yaml
-      # docker pull in server
+      # server test
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
@@ -219,16 +219,15 @@ EC2에 도커를 설치해 줍시다. 해당 내용은 [공식 문서](https://d
 
 설치 후 sudo 없이 `docker ps` 명령어를 입력했을 때 권한 오류가 발생한다면 아래 명령어를 입력합니다.
 
-`sudo chmod 666 /var/run/docker.sock`
-
-ref : [https://kyungyeon.dev/trouble-shooting/2](https://kyungyeon.dev/trouble-shooting/2)
+`sudo chmod 666 /var/run/docker.sock`\
+_Ref : [https://kyungyeon.dev/trouble-shooting/2](https://kyungyeon.dev/trouble-shooting/2)_
 
 ## 워크플로우 추가
 
 드디어 마지막 워크플로우입니다. [3번에서 추가했던 워크플로우](/posts/docker-cicd/#워크플로우-추가-1)를 아래와 같이 수정해 줍니다.
 
 ```yaml
-      # docker pull in server
+      # docker run in server
       - name: Deploy
         uses: appleboy/ssh-action@master
         with:
@@ -244,3 +243,77 @@ ref : [https://kyungyeon.dev/trouble-shooting/2](https://kyungyeon.dev/trouble-s
 
 - EC2에 접속하여 도커 이미지를 pull 하고 80번 포트로 demo라는 이름으로 실행한다.
 
+이제 배포된 서버의 IP주소로 접속해보면 반가운(?) 404페이지가 뜨는 걸 볼 수 있습니다:)
+
+![404 page](/assets/img/404page.png)
+_404 page_
+
+
+# 최종 워크플로우 파일
+
+`.github/workflows/basic-ci.yml`
+
+```yaml
+name: Basic CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # build
+      - name: Setup Java JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      # docker push
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${ secrets.DOCKERHUB_ID }
+          password: ${ secrets.DOCKERHUB_TOKEN }
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${ secrets.DOCKERHUB_REPO }
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${ steps.meta.outputs.tags }-${ steps.date.outputs.date }
+          labels: ${ steps.meta.outputs.labels }
+
+      # docker run in server
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_HOST }} # EC2 인스턴스 퍼블릭 DNS
+          username: ubuntu
+          key: ${{ secrets.AWS_SSH_KEY }} # pem 키
+          script: |
+            docker pull ${{ steps.meta.outputs.tags }}-${{ steps.date.outputs.date }}
+            docker stop demo
+            docker rm demo
+            docker run --restart always -d -p 80:8080 --name demo ${{ steps.meta.outputs.tags }}-${{ steps.date.outputs.date }}
+```
