@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://huey-j.github.io/sitemap.xml
