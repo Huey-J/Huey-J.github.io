@@ -352,13 +352,16 @@ _흐으음 이건 또 왜 그럴까요.._
 
 ## 적정 Connection Pool
 
-Connection Pool은 우선 Thread Pool 보다는 많이 설정해야 합니다. 데드락에 걸릴 수 있기 때문인데 자세한건 [여기](https://velog.io/@xogml951/DBCP-Deadlock-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85%EA%B3%BC-GenerationType.AUTO#2-1-hikaricp-deadlock)에서 볼 수 있습니다. (아래 공식에서 +1이 붙은 이유)
-
-만약 Thread Pool의 크기보다 Connection Pool의 크기가 훨씬 더 크면 메모리 상에서 남은 Connection은 작업을 하지 못하고 놀게 되기에, 실직적으로 메모리만 차지하게 됩니다.
-
-반대로 Connetion pool이 너무 적으면 많은 유저들이 사용하는 애플리케이션의 경우 사용 중인 Connection이 반납될 때까지 대기해야 하는 시간이 길어지게 되죠.
-
-커넥션 풀 역시 적정 크기를 정할 수 있는 공식이 존재하긴 합니다. 물론 스레드 풀과 같이 성능 측정과 상황에 맞추어 적용해야 하죠.
+Connection Pool은 서버 개수와 DB 인스턴스의 성능을 고려해서 결정해야 합니다. 하지만 최소한의 개수는 필요한데 그 공식은 아래와 같습니다.
 
 > 커넥션 풀 적정 크기 = 전체 Thread 개수 * (하나의 Task에서 동시에 필요한 Connection 수 - 1) + 1
 
+Connection Pool은 우선 Thread Pool 보다는 많이 설정해야 합니다. 데드락에 걸릴 수 있기 때문인데 자세한건 [여기](https://velog.io/@xogml951/DBCP-Deadlock-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85%EA%B3%BC-GenerationType.AUTO#2-1-hikaricp-deadlock)에서 볼 수 있습니다. (아래 공식에서 +1이 붙은 이유)
+
+그리고 만약 Thread Pool의 크기보다 Connection Pool의 크기가 훨씬 더 크면 메모리 상에서 남은 Connection은 작업을 하지 못하고 놀게 되기에, 실직적으로 메모리만 차지하게 됩니다.
+
+## 마치며
+
+적절한 Thread Pool과 Connection Pool을 설정하는건 단순히 공식으로 구하긴 어렵습니다. 기능마다, 환경마다 다르기 때문이죠. 하지만 위에서 볼 수 있듯이 서버 성능에 매우 큰 영향을 미치며 잘못 설정하면 치명적인 오류가 발생하기도 합니다.
+
+결론은 잘 알고 쓰자!
